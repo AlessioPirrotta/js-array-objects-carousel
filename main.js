@@ -22,110 +22,68 @@
 
 const simpsonFamily = [
     {
-        Name: "Homer Jay",
-        Surname: "Simpson",
-        Immagine: "./img/homer.jpg"
-    
+      Name: "Homer Jay",
+      Surname: "Simpson",
+      Immagine: "./img/homer.jpg",
     },
     {
-        Name: "Marjorie Jacqueline",
-        Surname: "Bouvier - Simpson",
-        Immagine: "./img/marge.jpg"
-    
+      Name: "Marjorie Jacqueline",
+      Surname: "Bouvier - Simpson",
+      Immagine: "./img/marge.jpg",
     },
     {
-        Name: "Bartholomew JoJo",
-        Surname: "Simpson",
-        Immagine: "./img/bart.jpg"
-    
+      Name: "Bartholomew JoJo",
+      Surname: "Simpson",
+      Immagine: "./img/bart.jpg",
     },
     {
-        Name: "Lisa Marie",
-        Surname: "Simpson",
-        Immagine: "./img/lisa.jpg"
-    
+      Name: "Lisa Marie",
+      Surname: "Simpson",
+      Immagine: "./img/lisa.jpg",
     },
     {
-        Name: "Margaret Evelyn Lenny",
-        Surname: "Simpson",
-        Immagine: "./img/maggie.jpg"
-    
-    }
-    ]
-
-    simsonImagesArray= []
-    
-    
-    let simpsonNameArray = simpsonFamily.map(simpEl => `${simpEl.Name} ${simpEl.Surname}`);
-    console.log(simpsonNameArray);
-
-
-    
-
-
-    simpsonFamily.forEach(function(simpEl) {
-        let container= document.getElementById("cntnr")
-        simsonImagesArray.push(simpEl.Immagine)
-        container.innerHTML+= `<div style="height: 100px;" class="">
-        <img style="height: 100px; width: 185px" src="${simpEl.Immagine}" alt="">
-    </div>`
-    });
-
-
-    let arrowUp = document.getElementById("up")
-    let arrowDown = document.getElementById("down")
-    let image = document.getElementById("firstImg");
-    let image1 = 0;
-    let name1= 0;
-    
-    
-    
+      Name: "Margaret Evelyn Lenny",
+      Surname: "Simpson",
+      Immagine: "./img/maggie.jpg",
+    },
+  ];
+  
+  let simsonImagesArray = simpsonFamily.map((simpEl) => simpEl.Immagine);
+  
+  let arrowUp = document.getElementById("up");
+  let arrowDown = document.getElementById("down");
+  let image = document.getElementById("firstImg");
+  
+  let imageIndex = 0;
+  
+  updateImage();
+  
+  arrowDown.addEventListener("click", function () {
+    imageIndex = (imageIndex + 1) % simsonImagesArray.length;
+    updateImage();
+  });
+  
+  arrowUp.addEventListener("click", function () {
+    imageIndex = (imageIndex - 1 + simsonImagesArray.length) % simsonImagesArray.length;
+    updateImage();
+  });
+  
+  function updateImage() {
     image.innerHTML = `
-    <div class="image-container">
-        <img style="width: 100%; height: 500px;" class="_imgContent position-relative" src="${simsonImagesArray[image1]}" alt="">
-        <div style="height: 60px; width:30%" class="image-caption text-start"><p>Name: ${simpsonNameArray[name1]}</p></div>
-    </div>
-`;
-    
-    arrowDown.addEventListener("click", function() {
-        image1 = image1 + 1;
-        name1 = name1 + 1
-        if (image1 && name1 >= simsonImagesArray.length) {
-            image1 = 0;
-            name1= 0;
-        }
-        image.innerHTML = `<div class="image-container">
-        <img style="width: 100%; height: 500px;" class="_imgContent position-relative" src="${simsonImagesArray[image1]}" alt="">
-        <div style="height: 60px; width:30%" class="image-caption text-start"><p>Name: ${simpsonNameArray[name1]}</p></div>
-    </div>`;
-    // for(let i=0; i < simsonImagesArray.length; i++){
-    //     simsonImagesArray[0]
-    // }
-     
+      <div class="image-container">
+          <img style="width: 100%; height: 500px;" class="_imgContent position-relative" src="${simsonImagesArray[imageIndex]}" alt="">
+          <div style="height: 60px; width:30%" class="image-caption text-start"><p>Name: ${simpsonFamily[imageIndex].Name} ${simpsonFamily[imageIndex].Surname}</p></div>
+      </div>
+    `;
+  
+    const container = document.getElementById("cntnr");
+    container.innerHTML = ""; 
+  
+    simsonImagesArray.forEach((image, i) => {
+      container.innerHTML += `
+        <div style="height: 100px;" class="${i === imageIndex ? '' : 'inactive'}">
+          <img id="img_${i}" style="height: 100px; width: 185px" src="${image}" alt="">
+        </div>
+      `;
     });
-
-    arrowUp.addEventListener("click", function() {
-
-        image1 = image1 - 1;
-        name1 = name1 - 1
-        if (image1 && name1 < 0) {
-            image1 = simsonImagesArray.length - 1;
-            name1= simpsonNameArray.length - 1;
-        }
-        image.innerHTML = `<div class="image-container">
-        <img style="width: 100%; height: 500px;" class="_imgContent position-relative" src="${simsonImagesArray[image1]}" alt="">
-        <div style="height: 60px; width:30%" class="image-caption text-start"><p>Name: ${simpsonNameArray[name1]}</p></div>
-    </div>`;
-     
-    });
-    
-
-
-
-   
-
-    
-
-
-
-
+  }
